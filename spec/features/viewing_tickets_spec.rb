@@ -3,10 +3,12 @@ require 'spec_helper'
 feature 'Viewing tickets' do
   before do
     textmate_2 = FactoryGirl.create(:project, name: "TextMate 2")
-
-    FactoryGirl.create(:ticket, project: textmate_2,
-      title: "Make it shiny!", 
-      description: "Gradients, Startburts, Oh my!" )
+    user = FactoryGirl.create(:user)
+    ticket = FactoryGirl.create(:ticket,
+        project: textmate_2,
+        title: "Make it shiny!",
+        description: "Gradients! Starbursts! Oh my!")
+    ticket.update(user: user)
 
     internet_explorer = FactoryGirl.create(:project, name: "Internet Explorer")
 
@@ -28,7 +30,7 @@ feature 'Viewing tickets' do
       expect(page).to have_content("Make it shiny!")
     end
 
-    expect(page).to have_content("Gradients, Startburts, Oh my!")
+    expect(page).to have_content("Gradients! Starbursts! Oh my!")
   end
 
 
